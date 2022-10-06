@@ -12,5 +12,5 @@ spring:
     default:
       expire-time: 700000000
     user:
-      expire-time: 100
+      expire-time: 700000000
       name: "Cart"

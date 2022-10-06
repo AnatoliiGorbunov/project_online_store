@@ -1,5 +1,5 @@
 angular.module('market-front').controller('storeController', function ($scope, $rootScope, $http, $localStorage) {
-    const contextPath = 'http://localhost:5555/gateway/api/v1';
+    const contextPath = 'http://localhost:5555/products/api/v1';
 
     $scope.loadProducts = function (pageIndex = 1) {
         $http({
@@ -16,13 +16,13 @@ angular.module('market-front').controller('storeController', function ($scope, $
     };
 
     $scope.addToCart = function (productId) {
-        $http.post('http://localhost:5555/gateway/api/v1/carts/add/' + productId, $localStorage.cartName)
+        $http.post('http://localhost:5555/products/api/v1/carts/add/' + productId, $localStorage.cartName)
             .then(function (response) {
             });
     };
 
     $scope.loadOrders = function () {
-        $http.get(contextPath + '/orders')
+        $http.get('http://localhost:5555/orders/api/v1/orders')
             .then(function (response) {
                 $scope.MyOrders = response.data;
             });
