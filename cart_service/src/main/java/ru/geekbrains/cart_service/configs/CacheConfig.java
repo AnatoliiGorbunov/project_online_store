@@ -1,5 +1,4 @@
-package ru.geekbrains.core_service.configs;
-
+package ru.geekbrains.cart_service.configs;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
@@ -13,7 +12,7 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-
+import org.springframework.web.client.RestTemplate;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -31,7 +30,6 @@ public class CacheConfig {
     private int userCacheExpireTime;
     @Value("${spring.cache.user.name}")
     private String userCacheName;
-
 
     @Bean(name = "test")
     public CacheManager cacheManager(RedisConnectionFactory lettuceConnectionFactory) {
@@ -60,4 +58,8 @@ public class CacheConfig {
         return cacheManager;
     }
 
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 }
