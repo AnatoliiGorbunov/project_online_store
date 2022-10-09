@@ -51,5 +51,5 @@ spring:
 jwt:
   secret: h4f8093h4f983yhrt9834hr0934hf0hf493g493gf438rh438th34g34g
 
-  #Стучимся на #localhost:5555/getaway/auth --
+  #Стучимся на #localhost:5555/authentication/auth --
   #Попадаем на #localhost:8188/web-market-auth/auth

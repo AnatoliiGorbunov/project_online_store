@@ -2,6 +2,8 @@ package ru.geekbrains.order_service.converters;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import ru.geekbrains.order_service.dto.OrderDto;
+import ru.geekbrains.order_service.entities.Order;
 
 import java.util.stream.Collectors;
 @Component

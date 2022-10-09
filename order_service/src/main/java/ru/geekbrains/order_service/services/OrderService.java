@@ -1,10 +1,16 @@
 package ru.geekbrains.order_service.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import ru.geekbrains.order_service.dto.OrderDetailsDto;
+import ru.geekbrains.order_service.dto.OrderDto;
+import ru.geekbrains.order_service.entities.Order;
+import ru.geekbrains.order_service.entities.OrderItem;
+import ru.geekbrains.order_service.repositories.OrderRepository;
 
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.util.ArrayList;
@@ -15,34 +21,31 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OrderService {
 
-//    private final ProductsService productsService;
-    private final RestTemplate restTemplate;
-    private final CartService cartService; // рест темплейт
     private final OrderRepository orderRepository;
 
+    private final RestTemplate restTemplate;
+
+
     @Transactional
-    public void createOrder(String username, OrderDetailsDto orderDetailsDto, String cartName) {
- //        Cart currentCart = cartService.getCurrentCart(cartName);
- //
+    @KafkaListener(topics = "${spring.kafka.topic}")
+    public void createOrder(OrderDto orderDto) {
         Order order = new Order();
-        order.setAddress(orderDetailsDto.getAddress());
-        order.setPhone(orderDetailsDto.getPhone());
-        order.setUsername(username);
-        order.setTotalPrice(currentCart.getTotalPrice());
-        List<OrderItem> items = currentCart.getItems().stream()
+        order.setAddress(orderDto.getAddress());
+        order.setPhone(orderDto.getPhone());
+        order.setUsername(orderDto.getUsername());
+        order.setTotalPrice(orderDto.getTotalPrice());
+        List<OrderItem> items = orderDto.getItemDtoList().stream()
                 .map(o -> {
                     OrderItem orderItem = new OrderItem();
                     orderItem.setOrder(order);
                     orderItem.setQuantity(o.getQuantity());
                     orderItem.setPricePerProduct(o.getPricePerProduct());
                     orderItem.setPrice(o.getPrice());
-
-                    orderItem.setProduct(productsService.findById(o.getProductId()).orElseThrow(() -> new ResourceNotFoundException("Product not found")));
+                    orderItem.setTitle(o.getTitle());
                     return orderItem;
                 }).collect(Collectors.toList());
         order.setItems(items);
         orderRepository.save(order);
-        currentCart.clear();
 
     }
 

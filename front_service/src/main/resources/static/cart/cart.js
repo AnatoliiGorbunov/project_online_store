@@ -17,7 +17,7 @@ angular.module('market-front').controller('cartController', function ($scope, $r
 
     $scope.checkOut = function () {  //создание заказа
         $http({
-            url: 'http://localhost:5555/orders/api/v1/orders' + $localStorage.cartName,
+            url: 'http://localhost:5555/cart/api/v1/carts/createOrder' + $localStorage.cartName,
             method: 'POST',
             data: {orderDetailsDto: $scope.orderDetails}
         }).then(function (response) {
