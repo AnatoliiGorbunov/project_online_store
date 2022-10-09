@@ -20,7 +20,7 @@
     }
 
     function run($rootScope, $http, $localStorage) {
-        if ($localStorage.springWebUser) {//проверяем лежит ли юзер в локал сторадже;
+        if ($localStorage.springWebUser) {
             $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.springWebUser.token;
         }
     }
@@ -39,7 +39,7 @@ angular.module('market-front').controller('indexController', function ($scope, $
     }
 
     $scope.tryToAuth = function () {
-        $http.post('http://localhost:5555/auth/auth', $scope.user)
+        $http.post('http://localhost:5555/authentication/auth', $scope.user)
             .then(function successCallback(response) {
                 if (response.data.token) {
                     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
@@ -80,7 +80,7 @@ angular.module('market-front').controller('indexController', function ($scope, $
     };
 
     $scope.showCurrentUserInfo = function () {
-        $http.get('http://localhost:5555/gateway/api/v1/profile')
+        $http.get('http://localhost:5555/authentication/api/v1/profile')
             .then(function successCallback(response) {
                 alert('MY NAME IS: ' + response.data.username);
             }, function errorCallback(response) {

@@ -1,0 +1,15 @@
+server:
+  port: 8186
+  servlet:
+    context-path: /web-market-order
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/online_store?currentSchema=order_db
+    username: postgres
+    password: 333
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL95Dialect
+    show-sql: true
