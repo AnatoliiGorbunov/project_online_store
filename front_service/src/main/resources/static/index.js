@@ -29,7 +29,7 @@
 
 angular.module('market-front').controller('indexController', function ($scope, $rootScope, $http, $localStorage) {
 
-    if (!$localStorage.cartName) {
+    if(!$localStorage.cartName){
         $localStorage.cartName = "cart_" + (Math.random() * 100);
     }
 
@@ -43,7 +43,7 @@ angular.module('market-front').controller('indexController', function ($scope, $
             .then(function successCallback(response) {
                 if (response.data.token) {
                     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
-                    $localStorage.springWebUser = {username: $scope.user.username, token: response.data.token};//кладем юзера в localStorage
+                    $localStorage.springWebUser = {username: $scope.user.username, token: response.data.token};
                     $localStorage.cartName = "cart_" + $scope.user.username;
 
                     $scope.user.username = null;

@@ -2,7 +2,10 @@ package ru.geekbrains.order_service.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import ru.geekbrains.order_service.converters.OrderConverter;
 import ru.geekbrains.order_service.dto.OrderDetailsDto;
+import ru.geekbrains.order_service.dto.OrderDto;
+import ru.geekbrains.order_service.services.OrderService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,10 +19,6 @@ public class OrderController {
     private final OrderConverter orderConverter;
 
 
-    @PostMapping("/{cartName}")
-    public void createOrder(@RequestHeader String username, @RequestBody OrderDetailsDto orderDetailsDto, @PathVariable String cartName) {
-        orderService.createOrder(username, orderDetailsDto, cartName);
-    }
 
     @GetMapping
     public List<OrderDto> getCurrenOrders(@RequestHeader String username) {

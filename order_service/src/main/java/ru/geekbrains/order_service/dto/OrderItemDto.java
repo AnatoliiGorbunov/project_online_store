@@ -14,7 +14,7 @@ public class OrderItemDto {
     private int pricePerProduct;
     private int price;
 
-    public OrderItemDto(Product product){
+    public OrderItemDto(ProductDto product) {
         this.productId = product.getId();
         this.title = product.getTitle();
         this.quantity = 1;
@@ -22,7 +22,7 @@ public class OrderItemDto {
         this.price = product.getPrice();
     }
 
-    public void changeQuantity(int delta){
+    public void changeQuantity(int delta) {
         this.quantity += delta;
         this.price = this.quantity * this.pricePerProduct;
     }

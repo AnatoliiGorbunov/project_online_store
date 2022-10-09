@@ -10,8 +10,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FieldsValidationError {
-
     private List<String> errorFieldsMessages;
-
 
 }

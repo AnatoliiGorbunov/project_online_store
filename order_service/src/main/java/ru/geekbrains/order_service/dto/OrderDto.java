@@ -2,6 +2,8 @@ package ru.geekbrains.order_service.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class OrderDto {
     private Long id;
