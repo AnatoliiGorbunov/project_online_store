@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.geekbrains.product_service.constants.ConstantsMessage;
 import ru.geekbrains.product_service.dto.ProductDto;
 import ru.geekbrains.product_service.entities.Product;
 import ru.geekbrains.product_service.excepttions.ResourceNotFoundException;
@@ -50,7 +51,7 @@ public class ProductsService {
     @Transactional
     public Product update(ProductDto productDto) {
         Product product = productsRepository.findById(productDto.getId()).
-                orElseThrow(() -> new ResourceNotFoundException("Невозможно обновить продукта, не надйен в базе, id: " + productDto.getId()));
+                orElseThrow(() -> new ResourceNotFoundException(ConstantsMessage.INCORRECT_PRODUCT.getMessage() + productDto.getId()));
         product.setPrice(productDto.getPrice());
         product.setTitle(productDto.getTitle());
         return product;

@@ -50,12 +50,11 @@ public class CacheConfig {
         Map<String, RedisCacheConfiguration> configMap = new HashMap<>();
         configMap.put(userCacheName, defaultCacheConfig.entryTtl(Duration.ofSeconds(userCacheExpireTime)));
 
-        RedisCacheManager cacheManager = RedisCacheManager.builder(lettuceConnectionFactory)
+        return RedisCacheManager.builder(lettuceConnectionFactory)
                 .cacheDefaults(defaultCacheConfig)
                 .initialCacheNames(cacheNames)
                 .withInitialCacheConfigurations(configMap)
                 .build();
-        return cacheManager;
     }
 
     @Bean
