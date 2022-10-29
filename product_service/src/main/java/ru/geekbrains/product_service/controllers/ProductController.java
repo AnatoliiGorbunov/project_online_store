@@ -3,6 +3,7 @@ package ru.geekbrains.product_service.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
+import ru.geekbrains.product_service.constants.ConstantsMessage;
 import ru.geekbrains.product_service.converters.ProductConverter;
 import ru.geekbrains.product_service.dto.ProductDto;
 import ru.geekbrains.product_service.entities.Product;
@@ -30,13 +31,14 @@ public class ProductController {
             page = 1;
         }
         return productsService.findAll(minPrice, maxPrice, titlePart, page).map(
-                p -> productConverter.entityToDto(p)
+                productConverter::entityToDto
         );
     }
 
     @GetMapping("/{id}")
     public ProductDto getProductById(@PathVariable Long id) {
-        Product product = productsService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product not found, id: " + id));
+        Product product = productsService.findById(id).
+                orElseThrow(() -> new ResourceNotFoundException(ConstantsMessage.PRODUCT_NOT_FOUND.getMessage() + id));
         return productConverter.entityToDto(product);
     }
 

@@ -11,7 +11,6 @@ import ru.geekbrains.auth_service.dto.ProfileDto;
 public class ProfileController {
     @GetMapping
     public ProfileDto getCurrentUserInfo(@RequestHeader String username) {
-        // User user = userService.findByUsername(principal.getName());
         return new ProfileDto(username);
     }
 }
