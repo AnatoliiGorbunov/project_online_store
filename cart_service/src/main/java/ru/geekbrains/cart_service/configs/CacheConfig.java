@@ -1,6 +1,8 @@
 package ru.geekbrains.cart_service.configs;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +15,7 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.web.client.RestTemplate;
+import ru.geekbrains.cart_service.properties.CacheProps;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -23,7 +26,13 @@ import java.util.Set;
 @Configuration
 @EnableCaching
 @EnableRedisRepositories
+@EnableConfigurationProperties(
+        CacheProps.class
+)
+@RequiredArgsConstructor
 public class CacheConfig {
+
+    private final CacheProps cacheProps;
     @Value("${spring.cache.default.expire-time}")
     private int defaultExpireTime;
     @Value("${spring.cache.user.expire-time}")
@@ -44,11 +53,11 @@ public class CacheConfig {
         // .disableCachingNullValues();
 
         Set<String> cacheNames = new HashSet<>();
-        cacheNames.add(userCacheName);
+        cacheNames.add(cacheProps.getName());
 
         // Применяем разные конфигурации к каждому кеш-пространству
         Map<String, RedisCacheConfiguration> configMap = new HashMap<>();
-        configMap.put(userCacheName, defaultCacheConfig.entryTtl(Duration.ofSeconds(userCacheExpireTime)));
+        configMap.put(cacheProps.getName(), defaultCacheConfig.entryTtl(Duration.ofSeconds(cacheProps.getExpireTime())));
 
         return RedisCacheManager.builder(lettuceConnectionFactory)
                 .cacheDefaults(defaultCacheConfig)

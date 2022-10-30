@@ -1,5 +1,7 @@
 package ru.geekbrains.product_service.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +16,7 @@ import ru.geekbrains.product_service.validators.ProductValidator;
 @RestController
 @RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
+@Tag(name = "Продукты", description = "Контроллер работающий с продуктами")
 public class ProductController {
 
     private final ProductConverter productConverter;
@@ -43,6 +46,7 @@ public class ProductController {
     }
 
     @PostMapping
+    @Operation(summary = "Запрос на сохранение нового продукта")
     public ProductDto saveNewProduct(@RequestBody ProductDto productDto) {
         productValidator.validate(productDto);
         Product product = productConverter.dtoToEntity(productDto);
