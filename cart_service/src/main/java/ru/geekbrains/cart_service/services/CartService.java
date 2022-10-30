@@ -43,7 +43,7 @@ public class CartService {
         Cart cart = getCurrentCart(cartName);
         if (!cart.addProductCount(id)) {
             ProductDto product =
-                    restTemplate.getForObject("http://localhost:8189/web-market-core/api/v1/products/" + id, ProductDto.class);
+                    restTemplate.getForObject("http://localhost:8189/web-market-products/api/v1/products/" + id, ProductDto.class);
             assert product != null;
             cart.addProduct(product);
         }

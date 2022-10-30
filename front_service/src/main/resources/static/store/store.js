@@ -11,12 +11,12 @@ angular.module('market-front').controller('storeController', function ($scope, $
                 max_price: $scope.filter ? $scope.filter.max_price : null
             }
         }).then(function (response) {
-            $scope.ProductsPage = response.data;
+            $scope.ProductsPage = response.data.content;
         });
     };
 
     $scope.addToCart = function (productId) {
-        $http.post('http://localhost:5555/products/api/v1/carts/add/' + productId, $localStorage.cartName)
+        $http.post('http://localhost:5555/cart/api/v1/carts/add/' + productId, $localStorage.cartName)
             .then(function (response) {
             });
     };

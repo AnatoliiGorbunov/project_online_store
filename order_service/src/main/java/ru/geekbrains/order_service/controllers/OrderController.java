@@ -18,7 +18,7 @@ public class OrderController {
     private final OrderConverter orderConverter;
 
     @GetMapping
-    public List<OrderDto> getCurrenOrders(@RequestHeader String username) {
+    public List<OrderDto> getCurrentOrders(@RequestHeader String username) {
         return orderService.findOrdersByUsername(username).stream()
                 .map(orderConverter::entityToDto).collect(Collectors.toList());
     }
